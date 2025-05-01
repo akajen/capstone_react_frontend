@@ -1,13 +1,14 @@
 "use client";
 import { useAddToCart } from "@/lib/useAddToCart";
 import menuItems from "@/dummydata";
+import IMenuItem from "@/lib/interfaces/MenuItem";
 
 export default function ATCButton({ itemId }: { itemId: number }) {
   const { add } = useAddToCart();
 
   const handleATCClick = (e: React.MouseEvent) => {
     const itemId = parseInt(e.currentTarget.id, 10);
-    const itemToAdd = menuItems.find((item) => item.id === itemId);
+    const itemToAdd = menuItems.find((item: IMenuItem) => item.id === itemId);
 
     if (itemToAdd) {
       add(itemToAdd);

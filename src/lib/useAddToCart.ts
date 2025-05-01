@@ -24,6 +24,7 @@ export const useAddToCart = create<ICartState>()(
       total: 0,
       add: (item: IMenuItem) =>
         set((state) => {
+          console.log("Adding item to cart: ", item);
           const existing = state.cart.find((i) => i.id === item.id);
           state.calculateTotal();
           if (existing) {
@@ -49,15 +50,17 @@ export const useAddToCart = create<ICartState>()(
             return {}; // Return empty object to not change state
           }
 
-          if (existingItem.quantity ?? 0 > 1) {
+          if ((existingItem.quantity ?? 0) > 1) {
             // Return a new state with the updated quantity
             const updatedCart = state.cart.map((i) =>
-              i.id === itemId ? { ...i, quantity: i.quantity ?? 0 - 1 } : i
+              i.itemid === itemId
+                ? { ...i, quantity: (i.quantity ?? 0) - 1 }
+                : i
             );
             return { cart: updatedCart };
           } else {
             // Return a new state without the item
-            const updatedCart = state.cart.filter((i) => i.id !== itemId);
+            const updatedCart = state.cart.filter((i) => i.itemid !== itemId);
             return { cart: updatedCart };
           }
         }),

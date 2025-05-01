@@ -17,7 +17,12 @@ export default function CheckoutPanel({
   isOpen: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const { cart, total, calculateTotal } = useAddToCart();
+  const {
+    cart,
+    total,
+    calculateTotal,
+    delete: deleteFromCart,
+  } = useAddToCart();
 
   useEffect(() => {
     console.log("Items in cart: ", cart);
@@ -89,6 +94,9 @@ export default function CheckoutPanel({
                                   <button
                                     type="button"
                                     className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+                                    onClick={() => {
+                                      deleteFromCart(item.id);
+                                    }}
                                   >
                                     Remove
                                   </button>
